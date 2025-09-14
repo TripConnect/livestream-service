@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/elastic/go-elasticsearch/v9/typedapi/esdsl"
@@ -21,14 +20,14 @@ const (
 	READY   LivestreamStatus = 2
 )
 
-func FindLivestreamStatus(s string) (LivestreamStatus, error) {
+func FindLivestreamStatus(s string) LivestreamStatus {
 	switch s {
 	case "CREATED":
-		return CREATED, nil
+		return CREATED
 	case "READY":
-		return READY, nil
+		return READY
 	default:
-		return UNKNOWN, fmt.Errorf("unknwown status: %s ", s)
+		return UNKNOWN
 	}
 }
 
@@ -48,12 +47,12 @@ func (s LivestreamStatus) Int() int {
 }
 
 type LivestreamEntity struct {
-	Id        gocql.UUID       `cql:"id"`
-	Title     string           `cql:"title"`
-	Thumbnail string           `cql:"thumbnail"`
-	HlsLink   string           `cql:"hls_link"`
-	Status    LivestreamStatus `cql:"status"`
-	CreatedAt time.Time        `cql:"created_at"`
+	Id        gocql.UUID `cql:"id"`
+	Title     string     `cql:"title"`
+	Thumbnail string     `cql:"thumbnail"`
+	HlsLink   string     `cql:"hls_link"`
+	Status    int        `cql:"status"`
+	CreatedAt time.Time  `cql:"created_at"`
 }
 
 type LivestreamDocument struct {
@@ -100,7 +99,7 @@ func NewLivestreamDoc(entity LivestreamEntity) LivestreamDocument {
 func NewLivestreamPb(entity LivestreamEntity) pb.Livestream {
 	return pb.Livestream{
 		Id:         entity.Id.String(),
-		Status:     entity.Status.String(),
+		Status:     LivestreamStatus(entity.Status).String(),
 		Title:      entity.Title,
 		Thumbnail:  entity.Thumbnail,
 		HlsLink:    entity.HlsLink,

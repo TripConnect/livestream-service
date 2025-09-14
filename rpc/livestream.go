@@ -15,8 +15,6 @@ import (
 	pb "github.com/tripconnect/go-proto-lib/protos"
 	"github.com/tripconnect/livestream-service/consts"
 	"github.com/tripconnect/livestream-service/model"
-	"google.golang.org/grpc/codes"
-	grpcStatus "google.golang.org/grpc/status"
 )
 
 const HLS_LINK_BASE = "/livestreams"
@@ -28,7 +26,7 @@ func (s *Server) CreateLivestream(ctx context.Context, req *pb.CreateLivestreamR
 		Title:     req.GetTitle(),
 		Thumbnail: req.GetThumbnail(),
 		HlsLink:   HLS_LINK_BASE + "/" + livestreamId.String() + "/index.m3u8",
-		Status:    model.CREATED,
+		Status:    model.CREATED.Int(),
 		CreatedAt: time.Now(),
 	}
 	insertErr := model.LivestreamRepository.Insert(livestream)
@@ -69,12 +67,8 @@ func (s *Server) SearchLivestream(ctx context.Context, req *pb.SearchLivestreams
 	pageSize := int(req.GetPageSize())
 
 	if req.GetStatus() != "" {
-		status, err := model.FindLivestreamStatus(req.GetStatus())
-		if err != nil {
-			return nil, grpcStatus.Error(codes.InvalidArgument, codes.InvalidArgument.String())
-		}
-		matchStatus := esdsl.NewMatchPhraseQuery("status", strconv.Itoa(int(status)))
-		musts = append(musts, matchStatus)
+		status := model.FindLivestreamStatus(req.GetStatus())
+		musts = append(musts, esdsl.NewMatchPhraseQuery("status", strconv.Itoa(int(status))))
 	}
 
 	if req.GetTerm() != "" {
