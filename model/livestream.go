@@ -7,16 +7,36 @@ import (
 	"github.com/gocql/gocql"
 	"github.com/kristoiv/gocqltable"
 	"github.com/kristoiv/gocqltable/recipes"
+	pb "github.com/tripconnect/go-proto-lib/protos"
 	"github.com/tripconnect/livestream-service/consts"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
+type LivestreamStatus int
+
+const (
+	CREATED LivestreamStatus = 0
+	READY   LivestreamStatus = 1
+)
+
+func (s LivestreamStatus) String() string {
+	switch s {
+	case CREATED:
+		return "CREATED"
+	case READY:
+		return "READY"
+	default:
+		return "UNKNOWN"
+	}
+}
+
 type LivestreamEntity struct {
-	Id        gocql.UUID `cql:"id"`
-	Title     string     `cql:"title"`
-	Thumbnail string     `cql:"thumbnail"`
-	HlsLink   string     `cql:"hls_link"`
-	Status    int        `cql:"status"`
-	CreatedAt time.Time  `cql:"created_at"`
+	Id        gocql.UUID       `cql:"id"`
+	Title     string           `cql:"title"`
+	Thumbnail string           `cql:"thumbnail"`
+	HlsLink   string           `cql:"hls_link"`
+	Status    LivestreamStatus `cql:"status"`
+	CreatedAt time.Time        `cql:"created_at"`
 }
 
 type LivestreamDocument struct {
@@ -48,3 +68,25 @@ var LivestreamDocumentMappings = esdsl.NewTypeMapping().
 	AddProperty("content", esdsl.NewKeywordProperty()).
 	AddProperty("sent_time", esdsl.NewLongNumberProperty()).
 	AddProperty("created_at", esdsl.NewLongNumberProperty())
+
+func NewLivestreamDoc(entity LivestreamEntity) LivestreamDocument {
+	return LivestreamDocument{
+		Id:        entity.Id,
+		Status:    int(entity.Status),
+		Title:     entity.Title,
+		Thumbnail: entity.Thumbnail,
+		HlsLink:   entity.HlsLink,
+		CreatedAt: int(entity.CreatedAt.UnixMilli()),
+	}
+}
+
+func NewLivestreamPb(entity LivestreamEntity) pb.Livestream {
+	return pb.Livestream{
+		Id:         entity.Id.String(),
+		Status:     entity.Status.String(),
+		Title:      entity.Title,
+		Thumbnail:  entity.Thumbnail,
+		HlsLink:    entity.HlsLink,
+		CreateTime: timestamppb.New(entity.CreatedAt),
+	}
+}
