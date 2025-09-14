@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/elastic/go-elasticsearch/v9/typedapi/esdsl"
@@ -15,9 +16,21 @@ import (
 type LivestreamStatus int
 
 const (
-	CREATED LivestreamStatus = 0
-	READY   LivestreamStatus = 1
+	UNKNOWN LivestreamStatus = 0
+	CREATED LivestreamStatus = 1
+	READY   LivestreamStatus = 2
 )
+
+func FindLivestreamStatus(s string) (LivestreamStatus, error) {
+	switch s {
+	case "CREATED":
+		return CREATED, nil
+	case "READY":
+		return READY, nil
+	default:
+		return UNKNOWN, fmt.Errorf("unknwown status: %s ", s)
+	}
+}
 
 func (s LivestreamStatus) String() string {
 	switch s {
@@ -28,6 +41,10 @@ func (s LivestreamStatus) String() string {
 	default:
 		return "UNKNOWN"
 	}
+}
+
+func (s LivestreamStatus) Int() int {
+	return int(s)
 }
 
 type LivestreamEntity struct {
@@ -63,10 +80,10 @@ var LivestreamRepository = struct {
 
 var LivestreamDocumentMappings = esdsl.NewTypeMapping().
 	AddProperty("id", esdsl.NewKeywordProperty()).
-	AddProperty("conversation_id", esdsl.NewKeywordProperty()).
-	AddProperty("from_user_id", esdsl.NewKeywordProperty()).
-	AddProperty("content", esdsl.NewKeywordProperty()).
-	AddProperty("sent_time", esdsl.NewLongNumberProperty()).
+	AddProperty("title", esdsl.NewKeywordProperty()).
+	AddProperty("thumbnail", esdsl.NewKeywordProperty()).
+	AddProperty("hls_link", esdsl.NewKeywordProperty()).
+	AddProperty("status", esdsl.NewLongNumberProperty()).
 	AddProperty("created_at", esdsl.NewLongNumberProperty())
 
 func NewLivestreamDoc(entity LivestreamEntity) LivestreamDocument {

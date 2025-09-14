@@ -79,6 +79,14 @@ github.com/tripconnect/go-proto-lib v1.0.4 h1:CAXwMWFSUghAZ9csS5GHPhZj2TufmRDD15
 github.com/tripconnect/go-proto-lib v1.0.4/go.mod h1:BdpjmjWVelxO0m8WQdr68nqB4OWb6HqBAk0Uvsfhw2Y=
 github.com/tripconnect/go-proto-lib v1.0.5 h1:y9our/DoCE0cyUkl8jiZbK0a7F4QInZmF31rl2sEhW8=
 github.com/tripconnect/go-proto-lib v1.0.5/go.mod h1:BdpjmjWVelxO0m8WQdr68nqB4OWb6HqBAk0Uvsfhw2Y=
+github.com/tripconnect/go-proto-lib v1.0.6 h1:L6cpLBT+6kRxMJm6Ho2FfNQUoiXE3m6MnNXmE4wA1t0=
+github.com/tripconnect/go-proto-lib v1.0.6/go.mod h1:BdpjmjWVelxO0m8WQdr68nqB4OWb6HqBAk0Uvsfhw2Y=
+github.com/tripconnect/go-proto-lib v1.0.7 h1:xLXFr9oBfY6v42jkj5xQiKYk9+W87mDBqQ5bF6GQKOc=
+github.com/tripconnect/go-proto-lib v1.0.7/go.mod h1:BdpjmjWVelxO0m8WQdr68nqB4OWb6HqBAk0Uvsfhw2Y=
+github.com/tripconnect/go-proto-lib v1.0.8 h1:q9cVvxdvgF5qG4p+ZB1JpWCAqsBdtwZzldZYC5NoRaA=
+github.com/tripconnect/go-proto-lib v1.0.8/go.mod h1:BdpjmjWVelxO0m8WQdr68nqB4OWb6HqBAk0Uvsfhw2Y=
+github.com/tripconnect/go-proto-lib v1.0.9 h1:gjL5ctvaUDBC28fm5STmOaX9h7R+YfVJtlA3AuWiP28=
+github.com/tripconnect/go-proto-lib v1.0.9/go.mod h1:BdpjmjWVelxO0m8WQdr68nqB4OWb6HqBAk0Uvsfhw2Y=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
 github.com/xdg-go/scram v1.1.2 h1:FHX5I5B4i4hKRVRBCFRxq1iQRej7WO3hhBuJf+UUySY=

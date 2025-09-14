@@ -82,7 +82,7 @@ func main() {
 	}
 
 	var server = grpc.NewServer()
-	protos.RegisterChatServiceServer(server, &rpc.Server{})
+	protos.RegisterLivetreamServiceServer(server, &rpc.Server{})
 
 	log.Printf("server listening at %v", lis.Addr())
 	if err := server.Serve(lis); err != nil {
