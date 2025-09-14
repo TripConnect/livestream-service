@@ -7,7 +7,7 @@ require (
 	github.com/gocql/gocql v1.7.0
 	github.com/kristoiv/gocqltable v0.0.0-20160119144122-50cb774da676
 	github.com/tripconnect/go-common-utils v1.0.1
-	github.com/tripconnect/go-proto-lib v1.0.9
+	github.com/tripconnect/go-proto-lib v1.0.10
 	google.golang.org/grpc v1.75.1
 )
 
