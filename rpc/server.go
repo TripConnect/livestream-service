@@ -5,5 +5,5 @@ import (
 )
 
 type Server struct {
-	protos.UnimplementedLivetreamServiceServer
+	protos.UnimplementedLivestreamServiceServer
 }
